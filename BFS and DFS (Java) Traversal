@@ -1,0 +1,63 @@
+import java.util.*;
+
+public class Main{
+    public static void main(String args[]){
+        int graph[][]={ {0,1,1,0,0},
+                        {1,0,0,1,0},
+                        {1,0,0,0,1},
+                        {0,1,0,0,0},
+                        {0,0,1,0,0} };
+        int startvertex=0;
+        BFS(graph,startvertex);
+        DFS(graph,startvertex);
+    }
+
+    public static void BFS(int graph[][],int start){
+        int n=graph.length;
+        boolean visited[]=new boolean[n];
+        Queue<Integer> queue=new LinkedList<>();
+        
+        queue.add(start);
+        visited[start]=true;
+        
+        System.out.println("BFS Traversal: ");
+        
+        
+        while(!queue.isEmpty()){
+            int curr=queue.poll();
+            System.out.print(curr+" ");
+            
+            for(int x=0;x<n;x++){
+                if(graph[curr][x]==1&&!visited[x]){
+                    visited[x]=true;
+                    queue.add(x);
+                }
+            }
+        }
+        System.out.println();
+    }
+
+    public static void DFS(int graph[][],int start){
+        int s=graph.length;
+        boolean seen[]=new boolean[s];
+        Stack<Integer> stack=new Stack<>();
+        
+        stack.push(start);
+        
+        System.out.println("DFS Traversal: ");
+        
+        while(!stack.isEmpty()){
+            int current=stack.pop();
+            if(!seen[current]){
+                seen[current]=true;
+                System.out.print(current+" ");
+                
+                for(int j=s-1;j>=0;j--){
+                    if(graph[current][j]==1&&!seen[j]){
+                        stack.push(j);
+                    }
+                }
+            }
+        }
+    }
+}
