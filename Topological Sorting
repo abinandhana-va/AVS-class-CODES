@@ -1,0 +1,148 @@
+//USING ADJACENCY MATRIX
+
+import java.util.*;
+
+public class Toposortmatrix{
+    public static void main(String[] args){
+        int graph[][]={
+            {0,1,0,0,0,1},
+            {0,0,1,0,1,0},
+            {0,0,0,1,0,0},
+            {1,1,0,0,0,0},
+            {0,0,0,1,0,0},
+            {0,0,0,0,1,0}
+        };
+        toposort(graph);
+        
+    }
+    public static void toposort(int graph[][]){
+        int n=graph.length;
+        Queue<Integer> q=new LinkedList<>();
+        int indegree[]=new int[n];
+        //indegree={0};
+        
+        //Indegree calculation
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(graph[i][j]==1){
+                    indegree[j]++;
+                }
+            }
+        }
+        
+        //Indegree=0 -> queue
+        for(int j=0;j<n;j++){
+            if(indegree[j]==0){
+                q.add(j);
+            }
+        }
+        
+        List<Integer> toposorted=new ArrayList<>();
+        //Processing queue
+        while(!q.isEmpty()){
+            int node=q.poll();
+            toposorted.add(node);
+            
+            for(int adj=0;adj<n;adj++){
+                while(graph[node][adj]==1){
+                    indegree[adj]--;
+                    if(indegree[adj]==0){
+                        q.add(adj);
+                    }
+            
+                }
+            }
+        }
+        
+        //Cycle Checkss
+        if(toposorted.size()!=n){
+            System.out.println("Cycle Detected!");
+            return;
+        }
+        
+        //Topologically sorted DAG
+        System.out.println("Topological Sorting:");
+        for(int l:toposorted){
+            System.out.println(l+" ");
+        }
+    }
+}
+
+
+//ADJACENCY LIST IMPLEMENTATION
+
+import java.util.*;
+
+public class Toposort{
+    public static void main(String[] args){
+        
+        int v=6;
+        
+        List<List<Integer>> graph=new ArrayList<>();
+        for(int i=0;i<v;i++){
+            graph.add(new ArrayList());
+        }
+        graph.get(0).add(1);
+        graph.get(0).add(5);
+        
+        graph.get(1).add(2);
+        graph.get(1).add(4);
+        
+        graph.get(2).add(3);
+        
+        graph.get(3).add(0);
+        graph.get(3).add(1);
+        
+        graph.get(4).add(3);
+        
+        graph.get(5).add(4);
+        toposort(graph);
+        
+    }
+    public static void toposort(List<List<Integer>> graph){
+        int n=graph.size();
+        Queue<Integer> q=new LinkedList<>();
+        int indegree[]=new int[n];
+        //indegree={0};
+        
+        //Indegree calculation
+        for(int i=0;i<n;i++){
+            for(int neighbour:graph.get(i)){
+                indegree[neighbour]++;
+            }
+        }
+        
+        //Indegree=0 ->queue
+        for(int j=0;j<n;j++){
+            if(indegree[j]==0){
+                q.add(j);
+            }
+        }
+        
+        List<Integer> toposorted=new ArrayList<>();
+        //Processing queue
+        while(!q.isEmpty()){
+            int node=q.poll();
+            toposorted.add(node);
+            
+            for(int adj:graph.get(node)){
+                indegree[adj]--;
+                if(indegree[adj]==0){
+                    q.add(adj);
+                }
+            }
+        }
+        
+        //Cycle Checkss
+        if(toposorted.size()!=n){
+            System.out.println("Cycle Detected!");
+            return;
+        }
+        
+        //Topologically sorted DAG
+        System.out.println("Topological Sorting:");
+        for(int l:toposorted){
+            System.out.println(l+" ");
+        }
+    }
+}
