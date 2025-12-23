@@ -1,3 +1,5 @@
+//BFS AND DFS (ADJACENCY MATRIX)
+
 import java.util.*;
 
 public class Main{
@@ -64,7 +66,7 @@ public class Main{
 
 
 
-#DFS RECURSIVE CODING
+//DFS RECURSIVE CODING(ADJACENCY LIST)
 import java.util.*;
 
 public class Dfsrecursion{
@@ -106,4 +108,103 @@ public class Dfsrecursion{
             }
         }
     }
+}
+
+//DFS ADJACENCY LIST
+
+import java.util.*;
+
+public class Dfslist{
+    public static void main(String[] args){
+        int vertices=6;
+        
+        List<List<Integer>> graph=new ArrayList<>();
+        
+        for(int i=0;i<vertices;i++){
+            graph.add(new ArrayList());
+        }
+        graph.get(0).add(1);
+        graph.get(0).add(5);
+        graph.get(1).add(2);
+        graph.get(1).add(4);
+        graph.get(2).add(3);
+        graph.get(3).add(0);
+        graph.get(3).add(1);
+        graph.get(4).add(3);
+        graph.get(5).add(4);
+        int startvertex=0;
+        dfsli(graph,startvertex);
+        
+    }
+    public static void dfsli(List<List<Integer>> graph,int start){
+        int n=graph.size();
+        boolean visited[]=new boolean[n];
+        Stack<Integer> stk=new Stack<>();
+        stk.push(start);
+        
+        while(!stk.isEmpty()){
+            int curr=stk.pop();
+            
+            if(!visited[curr]){
+                visited[curr]=true;
+		System.out.println(curr+" ");
+
+                for(int neighbour:graph.get(curr)){
+                    if(!visited[neighbour]){
+                        stk.push(neighbour);
+                    }
+                }
+            }
+        }
+    }
+}
+
+//BFS LIST IMPLEMENTATION
+
+import java.util.*;
+
+public class Bfslist{
+    public static void main(String[] args){
+        int vertices=6;
+        
+        List<List<Integer>> graph=new ArrayList<>();
+        
+        for(int i=0;i<vertices;i++){
+            graph.add(new ArrayList());
+        }
+        graph.get(0).add(1);
+        graph.get(0).add(5);
+        graph.get(1).add(2);
+        graph.get(1).add(4);
+        graph.get(2).add(3);
+        graph.get(3).add(0);
+        graph.get(3).add(1);
+        graph.get(4).add(3);
+        graph.get(5).add(4);
+        int startvertex=0;
+        bfsli(graph,startvertex);
+        
+    }
+    public static void bfsli(List<List<Integer>> graph,int start){
+        int n=graph.size();
+        boolean visited[]=new boolean[n];
+        Queue<Integer> q=new LinkedList<>();
+        q.add(start);
+	visited[start]=true;
+        
+	System.out.println("BFS Traversal");
+
+        while(!q.isEmpty()){
+            int curr=q.poll();
+            System.out.println(curr+" ");
+
+	    for(int neighbour:graph.get(curr)){
+                if(!visited[neighbour]){
+                        q.add(neighbour);
+			visited[neighbour]=true;
+                }
+            }
+        }
+    }
+    
 }
