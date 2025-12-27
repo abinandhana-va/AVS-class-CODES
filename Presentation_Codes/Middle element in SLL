@@ -1,0 +1,57 @@
+//C CODE
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int data;
+    struct node * next;
+};
+struct node * head=NULL;
+void insert(int key);
+void middle(struct node * head);
+void main(){
+    int key;
+    printf("Enter the values to insert to end:\n");
+    int i=0;
+    do{
+        printf("%d :",i);
+        scanf("%d",&key);
+        insert(key);
+        i++;
+    }while(i<4);
+    middle(head);
+    struct node * temp=head;
+    printf("\nThe SLL\n");
+    while(temp!=NULL){
+        printf("%d\n",temp->data);
+        temp=temp->next;
+    }
+}
+
+void insert(int key){
+    struct node * NN=(struct node *)malloc(sizeof(struct node));
+    NN->data=key;
+    NN->next=NULL;
+    if(head==NULL){
+        head=NN;
+        return;
+    }
+    struct node * temp=head;
+    while(temp->next!=NULL){
+        temp=temp->next;
+    }
+    temp->next=NN;
+    return;
+}
+
+
+void middle(struct node * head){
+    struct node * fast=head;
+    struct node * slow=head;
+    while(fast!=NULL&&fast->next!=NULL){
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    printf("The middle element in the SLL is:\t");
+    printf("%d",slow->data);
+    return;
+}
