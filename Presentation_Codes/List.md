@@ -1,7 +1,7 @@
-1. Inserting and deleting a specific a element in a sorted array.
+done 1. Inserting and deleting a specific a element in a sorted array.
 2. Circular queue - Array implementation
-3.Find middle element in a SLL
-4 Find k-th element from last in SIL
+done 3.Find middle element in a SLL
+4 Find k-th element from last in SLL
 5 Inserting & deleting an element in DLL
 6. Valid Parentheses - Leetcode
 7.Merge two sorted lists - leetcode T Merge
