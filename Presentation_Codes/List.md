@@ -1,4 +1,3 @@
-
 1. Inserting and deleting a specific a element in a sorted array.
 2. Circular queue - Array implementation
 3.Find middle element in a SLL
