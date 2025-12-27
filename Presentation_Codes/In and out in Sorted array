@@ -1,1 +1,152 @@
+//C PROGRAMMING 
 
+#include<stdio.h>
+//Sorted array - BST
+void insertin(int arr[15],int n,int val);
+void deleteout(int arr[15],int n,int key);
+void main(){
+    int n;
+    printf("\nSize  of array (<15)");
+    scanf("%d",&n);
+    printf("\nEnter a sorted array");
+    int arr[15];
+    for(int i=0;i<n;i++){
+        scanf("%d",&arr[i]);
+    }
+    printf("\nEnter a element to insert:");
+    int val;
+    scanf("%d",&val);
+    insertin(arr,n,val);
+    printf("\nDelete a element??");
+    int key;
+    scanf("%d",&key);
+    deleteout(arr,n,key);
+    printf("\nThank you!!");
+}
+
+void insertin(int arr[15],int n,int val){
+    int pos;
+    for(int i=0;i<n;i++){
+        if(arr[i]>val){
+            pos=i;
+            break;
+        }
+        else{
+            continue;
+        }
+    }
+    for(int j=n;j>pos;j--){
+        arr[j]=arr[j-1];
+    }
+    arr[pos]=val;
+    printf("Array after Insertion\n");
+    for(int k=0;k<=n;k++){
+        printf("%d\t",arr[k]);
+    }
+}
+void deleteout(int arr[15],int n,int key){
+    int pos=-1;
+    for(int i=0;i<n;i++){
+        if(arr[i]==key){
+            pos=i;
+            break;
+        }
+        else{
+            continue;
+        }
+    }
+    if(pos==-1){
+        printf("No such element to del!");
+        return;
+    }
+    for(int j=pos;j<n;j++){
+        arr[j]=arr[j+1];
+    }
+    printf("Array after Deletion\n");
+    for(int k=0;k<n;k++){
+        printf("%d\t",arr[k]);
+    }
+}
+
+//JAVA PROGRAMMING
+import java.util.*;
+public class Main{
+    
+    public static int insert(int arr[],int n,int v,int capacity){
+        if(n>=capacity){
+            System.out.println("No space to insert!");
+            return n;
+        }
+        int i;
+        for(i=n-1;(i>=0 && arr[i]>v);i--){
+            arr[i+1]=arr[i];
+        }
+        arr[i+1]=v;
+        
+        return (n+1);
+    }
+    
+    public static int deleting(int arr[],int n,int v,int cap){
+        int high=n;
+        int low=0;
+        int pos=-1;
+        while(low<=high){
+            int mid=(low+high)/2;
+            if(arr[mid]==v){
+                pos=mid;
+                break;
+            }
+            else if(arr[mid]>v){
+                high=mid-1;
+            }
+            else{
+                low=mid+1;
+            }
+            
+        }
+        if(pos==-1){
+            System.out.println("No such element to delete!");
+            return n;
+            
+        }
+        for(int j=pos;j<n;j++){
+            arr[j]=arr[j+1];
+        }
+        return (n-1);
+    }
+
+    public static void main(String args[]){
+        int arr[]=new int[20];
+        arr[0]=12;
+        arr[1]=15;
+        arr[2]=19;
+        arr[3]=22;
+        arr[4]=50;
+        int capacity=arr.length;
+        int n=5;
+        
+        //INSERTING
+        int key=18;
+        System.out.println("Array before Insertion");
+        for(int i=0;i<n;i++){
+            System.out.println(arr[i]);
+        }
+        n=insert(arr,n,key,capacity);
+        System.out.println("Array after Insertion");
+        for(int i=0;i<n;i++){
+            System.out.println(arr[i]);
+        }
+        
+        //DELETING
+        System.out.println("Array before deletion:");
+        for(int i=0;i<n;i++){
+            System.out.println(arr[i]);
+        }
+        key=12;
+        n=deleting(arr,n,key,capacity);
+        System.out.println("Array after deletion:");
+        for(int i=0;i<n;i++){
+            System.out.println(arr[i]);
+        }
+    }
+}
