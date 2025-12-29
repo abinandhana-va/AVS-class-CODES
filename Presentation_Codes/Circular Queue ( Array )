@@ -1,0 +1,80 @@
+#include<stdio.h>
+#define SIZE 5
+int front=-1,rear=-1;
+int q[SIZE];
+
+int enqueue(int val);
+void dequeue();
+void display();
+
+void main(){
+    int j,k;
+    printf("Circular Queue Array Implementation:");
+    printf("\nEnter queue elements");
+    for(int i=0;i<SIZE;i++){
+        scanf("%d",&k);
+        enqueue(k);
+    }
+    printf("\nThe queue:");
+    display();
+    printf("\nLet's delete !");
+    int n;
+    printf("\nNo of elements to delete?");
+    scanf("%d",&n);
+    while(n!=0){
+        dequeue();
+        n--;
+    }
+    printf("\nThe queue:");
+    display();
+    printf("\nLets add a few more after deleting?");
+    do{
+        printf("\nEnter element:");
+        scanf("%d",&k);
+        j=enqueue(k);
+    }while(j!=1);
+    display();
+}
+
+int enqueue(int val){
+    if((front==0&&rear==SIZE-1)||(rear+1==front)){
+        printf("Queue Overflow");
+        return 1;
+    }
+    if(front==-1){
+        front=0;
+        rear=0;
+    }
+    else{
+        rear=(rear+1)%SIZE;
+    }
+    q[rear]=val;
+    return 0 ;
+}
+void dequeue(){
+    if(front==-1){
+        return;
+    }
+    if(front==rear){
+        front=-1;
+        rear=-1;
+    }
+    else{
+        front=(front+1)%SIZE;
+    }
+}
+void display(){
+    if(front==-1){
+        printf("Queue is Empty");
+        return;
+    }
+    int i=front;
+    while(1){
+        printf("\n%d",q[i]);
+        if(i==rear){
+            break;
+        }
+        i=(i+1)%SIZE;
+        
+    }
+}
