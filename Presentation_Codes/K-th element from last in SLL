@@ -1,0 +1,75 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+    int data;
+    struct node * next;
+};
+struct node * head=NULL;
+void insert(int key);
+void element(struct node * head,int k);
+void main(){
+    int key;
+    struct node * temp=head;
+    printf("\nEnter the values to insert to end:");
+    int i=0;
+    do{
+        scanf("%d",&key);
+        insert(key);
+        scanf("%d",&i);
+    }while(i==1);
+
+    printf("\nThe SLL\n");
+    while(temp!=NULL){
+        printf("%d -> ",temp->data);
+        temp=temp->next;
+    }
+    
+    printf("k - th element from last : ( k ) = ?");
+    scanf("%d",&key);
+    element(head,key);
+}
+
+void insert(int key){
+    struct node * NN=(struct node *)malloc(sizeof(struct node));
+    NN->data=key;
+    NN->next=NULL;
+    if(head==NULL){
+        head=NN;
+        return;
+    }
+    struct node * temp=head;
+    while(temp->next!=NULL){
+        temp=temp->next;
+    }
+    temp->next=NN;
+    return;
+}
+
+void element(struct node * head,int k){
+    struct node * temp=head;
+    
+    if(temp==NULL){
+        printf("No element!");
+        return;
+    }
+    
+    int j,n=0;
+    while(temp!=NULL){
+        temp=temp->next;
+        n++;
+    }
+    if(k<=n){
+       j=n-k;
+        temp=head;
+        for(int i=0;i<j;i++){
+            temp=temp->next;
+        } 
+        printf("The element is : %d",temp->data);
+    }
+    else{
+        printf("OUT OF INDEX");
+    }
+    return;
+    
+}
