@@ -48,8 +48,10 @@ void middle(struct node * head){
     struct node * fast=head;
     struct node * slow=head;
     while(fast!=NULL&&fast->next!=NULL){
-        slow=slow->next;
         fast=fast->next->next;
+        if(fast!=NULL){
+            slow=slow->next;
+        }
     }
     printf("The middle element in the SLL is:\t");
     printf("%d",slow->data);
