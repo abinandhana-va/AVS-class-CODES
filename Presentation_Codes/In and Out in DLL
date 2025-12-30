@@ -1,0 +1,241 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+    int data;
+    struct node * next;
+    struct node * prev;
+};
+
+struct node * head=NULL;
+struct node * tail=NULL;
+void beg(int k);
+void end(int k);
+void position(int k);
+
+void dbeg();
+void dend();
+void dposition();
+
+void display();
+void main(){
+    int k,ch;
+    printf("Insertion into DLL\n");
+    int y=0;
+    do{
+        printf("Enter value to insert :\n");
+        scanf("%d",&k);
+        printf("1.Front\n2.End\n3.Position\n");
+        scanf("%d",&ch);
+        switch(ch){
+            case 1:
+                beg(k);
+                display();
+                break;
+            case 2:
+                end(k);
+                display();
+                break;
+            case 3:
+                position(k);
+                display();
+                break;
+            default:
+                printf("Invalid");
+                break;
+        }
+        printf("\nmore ? :\n");
+        scanf("%d",&y);
+    }while(y==1);
+    printf("Deletion in DLL\n");
+    y=0;
+    do{
+        printf("Delete from :\n");
+        printf("1.Front\n2.End\n3.Position\n");
+        scanf("%d",&ch);
+        switch(ch){
+            case 1:
+                dbeg(k);
+                display();
+                break;
+            case 2:
+                dend(k);
+                display();
+                break;
+            case 3:
+                dposition(k);
+                display();
+                break;
+            default:
+                printf("Invalid");
+                break;
+        }
+        printf("\ndelete more ? :\n");
+        scanf("%d",&y);
+    }while(y==1);
+}
+
+//INSERTION
+void beg(int k){
+    struct node * NN=(struct node *)malloc(sizeof(struct node));
+    NN->data=k;
+    NN->next=NULL;
+    NN->prev=NULL;
+    if(head==NULL){
+        head=NN;
+        tail=NN;
+    }
+    else{
+        NN->next=head;
+        head->prev=NN;
+        head=NN;
+    }
+    return;
+}
+void end(int k){
+    struct node * NN=(struct node *)malloc(sizeof(struct node));
+    NN->data=k;
+    NN->next=NULL;
+    NN->prev=NULL;
+    if(head==NULL){
+        head=NN;
+        tail=NN;
+    }
+    else{
+        tail->next=NN;
+        NN->prev=tail;
+        tail=NN;
+    }
+    return;
+}
+void position(int k){
+    int pos,count=0;
+    struct node * NN=(struct node *)malloc(sizeof(struct node));
+    NN->data=k;
+    NN->next=NULL;
+    NN->prev=NULL;
+    if(head==NULL){
+        head=NN;
+        tail=NN;
+        printf("No list!\n");
+        return;
+    }
+    printf("Enter positon:\n");
+    scanf("%d",& pos);
+    struct node * temp=head;
+    while(temp!=NULL){
+        temp=temp->next;
+        count++;
+    }
+    if(pos<=(count+1)){
+        temp=head;
+        if(pos==1){
+            NN->next=head;
+            head->prev=NN;
+            head=NN;
+            return;
+        }
+        if(pos==(count+1)){
+            tail->next=NN;
+            NN->prev=tail;
+            tail=NN;
+            return;
+        }
+        for(int i=1;i<pos;i++){
+            temp=temp->next;
+        }
+        temp->prev->next=NN;
+        NN->prev=temp->prev;
+        NN->next=temp;
+        temp->prev=NN;
+        return;
+    }
+    else{
+        printf("\nInsertion not possible\n");
+    }
+}
+
+//DELETION
+void dbeg(int k){
+    if(head==NULL){
+        printf("No element to delete!");
+        return;
+    }
+    else{
+        struct node * temp=head;
+        head->next->prev=NULL;
+        head=head->next;
+        free(temp);
+        temp=NULL;
+    }
+    return;
+}
+void dend(int k){
+    if(head==NULL){
+        printf("No element to delete!");
+        return;
+    }
+    else{
+        struct node * temp=tail;
+        tail->prev->next=NULL;
+        tail->prev=NULL;
+        free(temp);
+        temp=NULL;
+    }
+    return;
+}
+void dposition(int k){
+    int pos,count=0;
+    
+    if(head==NULL){
+        printf("No element to delete!");
+        return;
+    }
+    printf("Enter positon:\n");
+    scanf("%d",& pos);
+    struct node * temp=head;
+    while(temp!=NULL){
+        temp=temp->next;
+        count++;
+    }
+    if(pos<=count){
+        temp=head;
+        if(pos==1){
+            temp=head;
+            head->next->prev=NULL;
+            head=head->next;
+            free(temp);
+            temp=NULL;
+            return;
+        }
+        if(pos==(count)){
+            temp=tail;
+            tail->prev->next=NULL;
+            tail->prev=NULL;
+            free(temp);
+            temp=NULL;
+        }
+        for(int i=1;i<pos;i++){
+            temp=temp->next;
+        }
+        temp->next->prev=temp->prev;
+        temp->prev->next=temp->next;
+        temp->next=temp->prev=NULL;
+        free(temp);
+        temp=NULL;
+        return;
+    }
+    else{
+        printf("\nInsertion not possible\n");
+    }
+}
+
+void display(){
+    struct node * temp=head;
+    printf("The list \n");
+    while(temp!=NULL){
+        printf("%d\t",temp->data);
+        temp=temp->next;
+    }
+    return;
+}
