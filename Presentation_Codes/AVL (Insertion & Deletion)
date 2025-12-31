@@ -1,0 +1,194 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+    int key,height;
+    struct node * left;
+    struct node * right;
+};
+
+struct node * insert(struct node * node,int key);
+struct node * createnewnode(int key);
+int max(int a,int b);
+int height(struct node * node);
+int getbalance(struct node * root);
+void preorder(struct node * root);
+struct node * rightrotate(struct node * x);
+struct node * leftrotate(struct node * y);
+struct node * deletenode(struct node * root,int key);
+struct node * minValue(struct node * root);
+
+void main(){
+    struct node * root=NULL;
+    int keys[]={10,20,30,36,22,40};
+    int size=(sizeof(keys)/sizeof(keys[0]));
+    for(int i=0;i<size;i++){
+        root=insert(root,keys[i]);
+    }
+    printf("\nThe AVL Tree:");
+    preorder(root);
+    
+    int val;
+    printf("\nEnter the element to delete:");
+    scanf("%d",&val);
+    root=deletenode(root,val);
+    
+    printf("Updated Tree:");
+    preorder(root);
+}
+
+struct node * insert(struct node * node,int key){
+    if(node==NULL){
+        return createnewnode(key);
+    }
+    if(key<node->key){
+        node->left=insert(node->left,key);
+    }
+    else if(key>node->key){
+        node->right=insert(node->right,key);
+    }
+    else{
+        return node;
+    }
+    node->height=max(height(node->left),height(node->right))+1;
+    int balance=getbalance(node);
+    
+    //LL case
+    if(balance>1&&key<node->left->key){
+        return rightrotate(node);
+    }
+    
+    //RR Case
+    if(balance<-1&&key>node->right->key){
+        return leftrotate(node);
+    }
+    
+    //LR Case
+    if(balance>1&&key>node->left->key){
+        node->left=leftrotate(node->left);
+        return rightrotate(node);
+    }
+    
+    //RL Case
+    if(balance<-1&&key<node->right->key){
+        node->right=rightrotate(node->right);
+        return  leftrotate(node);
+    }
+    return node;
+}
+
+struct node * createnewnode(int key){
+    struct node * NN=(struct node *)malloc(sizeof(struct node));
+    NN->key=key;
+    NN->left=NULL;
+    NN->right=NULL;
+    NN->height=1;
+    return NN;
+}
+
+int max(int a,int b){
+    return a>b?a:b;
+}
+
+int height(struct node * node){
+    return node==NULL?0:node->height;
+}
+
+int getbalance(struct node * node){
+    return node==NULL?0:((height(node->left))-(height(node->right)));
+}
+
+void preorder(struct node * root){
+    if(root!=NULL){
+        printf("%d  ",root->key);
+        preorder(root->left);
+        preorder(root->right);
+    }
+    return;
+}
+
+struct node * rightrotate(struct node * x){
+    struct node * y=x->left;
+    struct node * T2=y->right;
+    y->right=x;
+    x->left=T2;
+    x->height=max(height(x->left),height(x->right))+1;
+    y->height=max(height(y->left),height(y->right))+1;
+    return y;
+}
+
+struct node * leftrotate(struct node * y){
+    struct node * x=y->right;
+    struct node * T2=x->left;
+    x->left=y;
+    y->right=T2;
+    y->height=max(height(y->left),height(y->right))+1;
+    x->height=max(height(x->left),height(x->right))+1;
+    return x;
+}
+    
+struct node * deletenode(struct  node * root,int key){
+    if(root==NULL){
+        return root;
+    }
+    if(key<root->key){
+        root->left=deletenode(root->left,key);
+    }
+    else if(key>root->key){
+        root->right=deletenode(root->right,key);
+    }
+    else{
+        if(root->left==NULL||root->right==NULL){
+            struct node * temp=root->left?root->left:root->right;
+            
+            if(temp==NULL){
+                temp=root;
+                root=NULL;
+            }
+            else{
+                *root=*temp;
+            }
+            free(temp);
+        }
+        else{
+            struct node * temp=minValue(root->right);
+            root->key=temp->key;
+            root->right=deletenode(root->right,temp->key);
+        }
+    }
+    if(root==NULL){
+        return root;
+    }
+    root->height=max(height(root->left),height(root->right))+1;
+    int bal=getbalance(root);
+        
+    //LL Case
+    if(bal>1 && getbalance(root->left)>=0){
+        return rightrotate(root);
+    }
+    
+    //LR case
+    if(bal>1 && getbalance(root->left)<0){
+        root->left=leftrotate(root->left);
+        return rightrotate(root->right);
+    }
+        
+    //RR case
+    if(bal<-1 && getbalance(root->right)<=0){
+        return leftrotate(root);
+    }
+        
+    if(bal<-1 && getbalance(root->right)>0){
+        root->right=rightrotate(root->right);
+        return leftrotate(root);
+    }
+    return root;
+}
+
+struct node * minValue(struct node * root){
+    struct node * current=root;
+    while(current->left!=NULL){
+        current=current->left;
+    }
+    return current;
+}
