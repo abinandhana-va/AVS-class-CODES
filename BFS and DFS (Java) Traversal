@@ -100,11 +100,9 @@ public class Dfsrecursion{
     public static void dfsrecursion(List<List<Integer>> graph,boolean visited[],int start){
         visited[start]=true;
         System.out.println(start+" ");
-        for(int j=0;j<graph.size();j++){
-            for(int neighbour:graph.get(start)){
-                if(!visited[neighbour]){
-                    dfsrecursion(graph,visited,neighbour);
-                }
+        for(int neighbour:graph.get(start)){
+            if(!visited[neighbour]){
+                dfsrecursion(graph,visited,neighbour);
             }
         }
     }
