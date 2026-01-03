@@ -1,0 +1,25 @@
+void dfs(int node,int ** isConnected,int * visited,int n){
+    visited[node]=1;
+    
+    for(int j=0;j<n;j++){
+        if(isConnected[node][j]==1&&!visited[j]){
+            visited[j]=1;
+            dfs(j,isConnected,visited,n);
+        }
+    }
+}
+
+int findCircleNum(int** isConnected, int isConnectedSize, int* isConnectedColSize) {
+    int prov=0;
+    int * visited=calloc(isConnectedSize,sizeof(int));
+
+    for(int i=0;i<isConnectedSize;i++){
+        if(!visited[i]){
+            prov++;
+            dfs(i,isConnected,visited,isConnectedSize);
+        }
+    }
+
+    free(visited);
+    return prov;
+}
