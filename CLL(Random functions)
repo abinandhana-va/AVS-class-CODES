@@ -1,0 +1,60 @@
+
+#include <stdio.h>
+//Q.To delete a specific node in Cicularily Linkedlist based on value
+//Q.To add a node after a speicific value in CLL
+void insertatbeg(int value);
+void insertafterval(int value,int key);
+struct node{
+    int data;
+    struct node * next;
+}
+struct node * head=NULL;
+struct node * tail=NULL;
+int main()
+{
+    do{
+        printf("Enter your value:");
+        scanf("%d",&value);
+        insertatbeg(value);
+        printf("More???");
+        scanf("%d",&y);
+    }while(y==1);
+}
+
+void insertatbeg(int value){
+    struct node * NN=(struct node *)malloc(sizeof(struct node ));
+    NN->data=value;
+    if(head==NULL){
+        head=NN;
+        head->next=NN;
+        tail=NN;
+        return;
+    }
+    NN->next=head;
+    tail->next=NN;
+    head=NN;
+}
+
+void insertafterval(int value,int key){
+    struct node * NN=void insertatbeg(int value)
+    struct node * temp=head;
+    while(temp->data!=key){
+        temp=temp->next;
+    }  
+    if(temp==tail){
+        head=NN;
+    }
+    if(temp->next->next==head){
+        tail=NN;
+    }
+    NN->next=temp->next;
+    temp->next=NN;
+}
+
+void display(){
+    struct node * temp=head;
+    while(temp){
+        printf("\n%d");
+       
+    }
+}
