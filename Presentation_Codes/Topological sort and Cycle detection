@@ -1,0 +1,89 @@
+//List Implementation
+
+void Topologicalsort(List<List<Integer>> list,int v){
+    
+    int[] indegree=new int[v];
+    
+    //Calculate indegree
+    
+    for(int i=0;i<v;i++){
+        for(int neighbour:list.get(i)){
+            indegree[neighbour]++;
+        }
+    }
+    
+    Queue<Integer> queue=new LinkedList<>();
+    
+    //Adding to queue;
+    
+    for(int j=0;j<v;j++){
+        if(indegree[j]==0){
+            queue.add(j);
+        }
+    }
+    
+    List<Integer> toporder=new ArrayList<>();
+    
+    while(!queue.isEmpty()){
+        int curr=queue.poll();
+        toporder.add(curr);
+        
+        for(int neighbour:list.get(curr)){
+            indegree[neighbour]--;
+            if(indegree[neighbour]==0){
+                queue.add(neighbour);
+            }
+        }
+    }
+    
+    if(toporder.size()!=v){
+        System.out.println("Cycle Detected!");
+    }
+}
+
+//Array Implementation
+
+void Topologicalsort(int[][] list,int v){
+    
+    int[] indegree=new int[v];
+    
+    //Calculate indegree
+    
+    for(int i=0;i<v;i++){
+        for(int j=0;j<v;j++){
+            if(list[i][j]==1){
+                indegree[j]++;
+            }
+        }
+    }
+    
+    Queue<Integer> queue=new LinkedList<>();
+    
+    //Adding to queue;
+    
+    for(int j=0;j<v;j++){
+        if(indegree[j]==0){
+            queue.add(j);
+        }
+    }
+    
+    List<Integer> toporder=new ArrayList<>();
+    
+    while(!queue.isEmpty()){
+        int curr=queue.poll();
+        toporder.add(curr);
+        
+        for(int i=0;i<v;i++){
+            if(list[curr][i]==1){
+                indegree[i]--;
+                if(indegree[i]==0){
+                    queue.add(i);
+                }
+            }
+        }
+    }
+    
+    if(toporder.size()<v){
+        System.out.println("Cycle Detected!");
+    }
+}
