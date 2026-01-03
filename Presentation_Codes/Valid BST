@@ -31,3 +31,40 @@ int isvalid(struct node * root,int min ,int max){
     return isvalid(root->left,min,root->key)&&isvalid(root->right,root->key,max);
     
 }
+
+//LEETCODE
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+static struct TreeNode * prev;
+
+bool checkBST(struct TreeNode* root) {
+
+    if(root==NULL){
+        return 1;
+    }
+
+    if(!checkBST(root->left)){
+        return 0;
+    }
+
+    if(prev!=NULL&&root->val<=prev->val){
+        return 0;
+    }
+
+    prev=root;
+
+    return checkBST(root->right);
+}
+
+bool isValidBST(struct TreeNode* root) {
+    prev=NULL;
+    return checkBST(root);
+}
