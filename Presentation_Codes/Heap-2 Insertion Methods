@@ -1,0 +1,53 @@
+//Top-down approach ( Succesive Innsertion )-MAX HEAPIFY
+int size=0,max=10;
+int arr[10];
+void insert(int val){
+    if(size==MAX){
+        printf("Heap is full!");
+        return;
+    }
+    arr[size]=val;
+    i=size;
+    size++;
+    while(arr[i] > arr[(i-1)/2]){ //Min heap : arr[i] < arr[(i-1)/2]
+        swap(&arr[i],&arr[(i-1)/2]);
+        i=(i-1)/2;
+    }
+}
+
+//Bottom up approach (Floyds Method )- MAX HEAPIFY
+
+void main(){
+    int arr[10]; //Fill the values
+     
+    int n=sizeof(arr)/sizeof(arr[0]);
+    
+    for(int i = (n/2)-1;i>=0;i--){//point to first parent node from last
+        Maxheapify(arr,n,i);
+    }
+}
+
+void Maxheapify(int arr[n],int n,int i){ //Min heapify(int arr[n],int n,int i)
+    int largest=i; //Min heap  smallest=i;
+    int lc=2i+1;
+    int rc=2i+2;
+    
+    if(lc<n && arr[lc]>arr[largest]){ //Min heap lc<n && arr[lc] < arr[largest]
+        largest=lc;
+    }
+    
+    if(rc<n && arr[rc]>arr[largest]){//Min heap rc<n && arr[rc] < arr[largest]
+        largest=rc;
+    }
+    
+    if(largest!=i){ //Min heap smallest!=i
+        swap(&arr[i],&arr[largest]);
+        Maxheapify(arr,n,largest); //Minheapify(arr,n,smallest);
+    }
+}
+
+void swap(int * a,int * b){
+    int temp=*a;
+    *a=*b;
+    *b=temp;
+}
