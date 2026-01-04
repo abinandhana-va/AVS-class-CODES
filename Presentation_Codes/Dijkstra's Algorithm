@@ -1,0 +1,81 @@
+//Unweighted Graph
+
+public static void bfs(List<List<Integer>> graph,int src){
+    int n=graph.size();
+    
+    boolean visited[]=new boolean[n];
+    int dist[]=new int[n];
+    
+    Arrays.fill(dist,-1);
+    
+    Queue<Integer> queue=new LinkedList<>();
+    
+    visited[src]=true;
+    dist[src]=0;
+    queue.add(src);
+    
+    while(!queue.isEmpty()){
+        int curr=queue.poll();
+        
+        for(int neighbour:graph.get(curr)){
+            if(!visited[neighbour]){
+                visited[neighbour]=true;
+                queue.add(neighbour);
+                dist[neighbour]=dist[curr]+1;
+            }
+        }
+    }
+}
+
+//Weighted Graph
+
+class Edge{
+    int to;
+    int weight;
+    Edge(int to,int weight){
+        this.to=to;
+        this.weight=weight;
+    }
+}
+
+class Pair{
+    int node;
+    int dist;
+    Pair(int node,int dist){
+        this.node=node;
+        this.dist=dist;
+    }
+}
+
+public static void dijikstra(List<List<Integer>> graph,int src){
+    
+    int n=graph.size();
+    
+    int visited[]=new int[n];
+    int dist[]=new int[n];
+
+    Array.fill(dist,Integer.MAX_VALUE);
+
+    PriorityQueue<Pair> pq=new PriorityQueue<>(Comparator.ComparingInt(p->p.dist));
+    
+    dist[src]=0;
+  
+    pq.add(new Pair(src,0));
+    
+    while(!pq.isEmpty()){
+        Pair curr=pq.poll();
+        int u=curr.node;
+        if(visited[u]){
+            continue;
+        }
+        visited[u]=true;
+        for(Edge edge:graph.get(u)){
+            int v=edge.to;
+            int wt=edge.weight;
+            if(!visited[v]&&dist[u]+wt<dist[v]){
+                dist[v]=dist[u]+wt;
+                pq.add(new Pair(v,dist[v]));
+            }
+        }
+    }
+}
