@@ -1,0 +1,87 @@
+
+//SORTING-DELETION(MAX_HEAPIFY)
+
+#include <stdio.h>
+int arr[10],sortedarr[10],max=10,size=0,ind=0,value,y;
+
+void heapconst(int value);
+void swap(int *a,int *b);
+void display(int arr[],int size);
+int deleteroot();
+void maxheapify(int arr[],int size,int k);
+void sortheap(int root);
+
+int main()
+{
+    do{
+        printf("Enter your value:");
+        scanf("%d",&value);
+        heapconst(value);
+        printf("More???");
+        scanf("%d",&y);
+    }while(y==1);
+    printf("Max heap constructed:-\n");
+    display(arr,size);
+    printf("Sorting by Deletion in heap:-\n");
+    while(size>0){
+        int root=deleteroot();
+        printf("Node deleted %d\n",root);
+        sortheap(root);
+    }
+    display(sortedarr,ind);
+}
+
+void swap(int *a,int *b){
+    int temp=*a;
+    *a=*b;
+    *b=temp;
+}
+void heapconst(int value){
+    if(size==max){
+        printf("Heap is full");
+        return;
+    }
+    arr[size]=value;
+    int i=size;
+    size++;
+    while(i!=0&&arr[i]>arr[(i-1)/2]){
+        swap(&arr[i],&arr[(i-1)/2]);
+        i=(i-1)/2;
+    }
+}
+
+void maxheapify(int arr[],int size,int k){
+    int largest=k;
+    int rc=2*k+2;
+    int lc=2*k+1;
+    if(lc<size&&arr[lc]>arr[largest]){
+        largest=lc;
+    }
+    if(rc<size&&arr[rc]>arr[largest]){
+        largest=rc;
+    }
+    if(k!=largest){
+        swap(&arr[k],&arr[largest]);
+        maxheapify(arr,size,largest);
+    }
+}
+
+void display(int arr[],int size){
+
+    for(int j=0;j<size;j++){
+        printf("%d\n",arr[j]);
+    }
+}
+
+int deleteroot(){
+    swap(&arr[0],&arr[size-1]);
+    int ele=arr[size-1];
+    size--;
+    maxheapify(arr,size,0);
+    return ele;
+}
+
+void sortheap(root){
+    sortedarr[ind]=root;
+    ind++;
+}
