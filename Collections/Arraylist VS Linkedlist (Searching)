@@ -1,0 +1,41 @@
+import java.util.*;
+class Main{
+    public static void main(String args[]){
+        int n=10000;
+        
+        ArrayList<Integer> arr=new ArrayList<>();
+        for(int i=0;i<n;i++){
+            arr.add(0,i);
+        }
+    
+        LinkedList<Integer> ll=new LinkedList<>();
+        for(int j=0;j<n;j++){
+            ll.add(0,j);
+        }
+        
+        //AL
+        
+        long startas=System.nanoTime();
+        int y=arr.get(5000);
+        long endas=System.nanoTime();
+        long diff=endas-startas;
+        
+        //LL
+        long startls=System.nanoTime();
+        int x=ll.get(5000);
+        long endls=System.nanoTime();
+        long diffl=endls-startls;
+        System.out.println("Starting Second: "+startas);
+        System.out.println("Ending second : "+endas);
+        System.out.println("Diff :"+diff);
+        System.out.println("Starting Second: "+startls);
+        System.out.println("Ending second : "+endls);
+        System.out.println("Diff :"+diffl);
+        if(diff>diffl){
+            System.out.println("LinkedList is Better");
+        }
+        else{
+            System.out.println("ArrayList is Better");
+        }
+    }
+}
