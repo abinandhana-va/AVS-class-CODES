@@ -1,0 +1,34 @@
+/*Write a java program with the following req
+read name from students present in classa name should be stored only once even 
+if there are multipple entries , the order in which the students entered must be preserved display the list;
+LinkedHashSet.*/
+
+import java.util.*;
+class Main{
+    public static void main(String args[]){
+        Set<String> s=new LinkedHashSet<>();
+        Scanner sc=new Scanner(System.in);
+        for(int i=0;i<10;i++){
+            String name=sc.nextLine();
+            s.add(name);
+        }
+        System.out.println(s);
+    }
+}
+
+//CHECK THIS!
+/*Write a java program where patients are treated based on priority , lower no indicates higher priority .*/
+
+import java.util.*;
+class Main{
+    public static void main(String args[]){
+        Set<String> s=new LinkedHashSet<>();
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        for(int i=0;i<n;i++){
+            String name=sc.nextLine();
+            s.add(name);
+        }
+        System.out.println(s);
+    }
+}
