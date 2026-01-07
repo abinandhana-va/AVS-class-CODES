@@ -146,12 +146,12 @@ struct node * deletenode(struct  node * root,int key){
                 root=NULL;
             }
             else{
-                *root=*temp;
+                *root=*temp;//Only the value is copied from temp to root , root and temp are still pointing to different address
             }
             free(temp);
         }
         else{
-            struct node * temp=minValue(root->right);
+            struct node * temp=minValue(root->right);//approaching an inorder successor for reducing edge cases
             root->key=temp->key;
             root->right=deletenode(root->right,temp->key);
         }
