@@ -177,7 +177,8 @@ struct node * deletenode(struct  node * root,int key){
     if(bal<-1 && getbalance(root->right)<=0){
         return leftrotate(root);
     }
-        
+
+    //RL case
     if(bal<-1 && getbalance(root->right)>0){
         root->right=rightrotate(root->right);
         return leftrotate(root);
