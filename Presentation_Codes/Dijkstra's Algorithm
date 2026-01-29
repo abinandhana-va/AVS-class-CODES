@@ -29,53 +29,83 @@ public static void bfs(List<List<Integer>> graph,int src){
 
 //Weighted Graph
 
+import java.util.*;
+
+class Node{
+    int data;
+    int dist;
+    
+    Node(int data,int dist){
+        this.data=data;
+        this.dist=dist;
+    }
+}
 class Edge{
     int to;
     int weight;
+    
     Edge(int to,int weight){
         this.to=to;
         this.weight=weight;
     }
 }
 
-class Pair{
-    int node;
-    int dist;
-    Pair(int node,int dist){
-        this.node=node;
-        this.dist=dist;
-    }
-}
 
-public static void dijikstra(List<List<Integer>> graph,int src){
-    
-    int n=graph.size();
-    
-    int visited[]=new int[n];
-    int dist[]=new int[n];
+class Main {
+    public static void main(String args[]) {
 
-    Array.fill(dist,Integer.MAX_VALUE);
+        int n = 5;
+        List<List<Edge>> graph = new ArrayList<>();
 
-    PriorityQueue<Pair> pq=new PriorityQueue<>(Comparator.ComparingInt(p->p.dist));
-    
-    dist[src]=0;
-  
-    pq.add(new Pair(src,0));
-    
-    while(!pq.isEmpty()){
-        Pair curr=pq.poll();
-        int u=curr.node;
-        if(visited[u]){
-            continue;
+        for (int i = 0; i < n; i++) {
+            graph.add(new ArrayList<>());
         }
-        visited[u]=true;
-        for(Edge edge:graph.get(u)){
-            int v=edge.to;
-            int wt=edge.weight;
-            if(!visited[v]&&dist[u]+wt<dist[v]){
-                dist[v]=dist[u]+wt;
-                pq.add(new Pair(v,dist[v]));
+
+        // Example edges
+        graph.get(0).add(new Edge(1, 4));
+        graph.get(0).add(new Edge(2, 1));
+        graph.get(2).add(new Edge(1, 2));
+        graph.get(1).add(new Edge(3, 1));
+        graph.get(2).add(new Edge(3, 5));
+
+        int start = 0;
+
+        dijikstra(graph, start);
+    }
+    
+    public static void  dijikstra(List<List<Edge>> list,int start){
+        
+        int n=list.size();
+        
+        boolean visited[]=new boolean[n];
+        int dist[]=new int[n];
+        
+        Arrays.fill(dist,Integer.MAX_VALUE);
+        
+        PriorityQueue<Node> pq=new PriorityQueue<>(Comparator.comparingInt(p->p.dist));
+        
+        pq.add(new Node(start,0));
+        dist[start]=0;
+        
+        while(!pq.isEmpty()){
+            Node curr=pq.poll();
+            
+            int v=curr.data;
+            
+            if(visited[v]) continue;
+            
+            visited[v]=true;
+            
+            for(Edge val:list.get(v)){
+                int u=val.to;
+                int wt=val.weight;
+                
+                if(!visited[u] && wt+dist[v]<dist[u]){
+                    dist[u]=dist[v]+wt;
+                    pq.add(new Node(u,dist[u]));
+                }
             }
         }
     }
+}
 }
